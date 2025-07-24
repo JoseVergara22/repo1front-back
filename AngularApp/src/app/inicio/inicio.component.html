@@ -78,8 +78,58 @@
       >
         Hacer Consulta Con post
       </button>
+
+      <button
+        type="button"
+        id="registerCountry"
+        class="btn btn-primary waves-effect"
+        (click)="goGetBackend()"
+        
+      >
+        Hacer get personajes
+      </button>
+
+      <button
+        type="button"
+        id="registerCountry"
+        class="btn btn-primary waves-effect"
+        (click)="postPersonaje()"
+        
+      >
+        Post personaje
+      </button>
     </div>
   </div>
 </body>
 
 
+<br> 
+
+
+<div class="container mt-5" *ngIf="personajes">
+  <h5 class="text-primary">Fondos Registrados</h5>
+  <table class="table table-bordered table-striped table-hover">
+    <thead class="table-light">
+      <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Monto mínimo</th>
+        <th>Categoría</th>
+
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let personaje of personajes">
+        <td>{{ personaje.id }}</td>
+        <td>{{ personaje.nombre }}</td>
+        
+        <td>{{ personaje.categoria }}</td>
+        <td><button  type="button" class="btn btn-danger"
+            style="margin-left: 10px" (click)="removepersonaje(personaje)">
+            Eliminar personaje
+          </button></td>
+
+      </tr>
+    </tbody>
+  </table>
+</div>

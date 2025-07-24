@@ -11,6 +11,7 @@ export class InicioComponent {
   nameTexto: string = '';
   phoneNumber: string = '';
   emailUser: string = '';
+  personajes: any;
 
   constructor(private router: Router, private inicioService: InicioService) {}
 
@@ -32,7 +33,7 @@ export class InicioComponent {
     console.log('entro');
     console.log('entro a la función');
 
-    this.inicioService.postPayments({ name: this.nameTexto, phone: this.phoneNumber, email: this.emailUser }).subscribe(
+    this.inicioService.postPayments({}).subscribe(
       (data) => {
         console.log('Respuesta del backend:', data);
       },
@@ -42,6 +43,56 @@ export class InicioComponent {
     );
   }
 
+  goGetBackend() {
+    console.log('entro');
+    console.log('entro a la función');
+
+    // this.inicioService.getPersonajes().subscribe(
+    //   (data) => {
+    //     console.log('Respuesta del backend:', data);
+    //     this.personajes = data;
+    //     console.log('Acaaa personajes en declaracion', this.personajes);
+    //   },
+    //   (error) => {
+    //     console.error('Error al conectar con el backend:', error);
+    //   }
+    // );
+
+    // console.log('entro');
+    // console.log('entro a la función');
+
+    this.inicioService.getPersonajes().subscribe({
+      next: (data) => {
+        console.log('Respuesta del backend:', data);
+        this.personajes = data;
+        console.log('Acaaa personajes en declaracion', this.personajes);
+      },
+      error: (error) => {
+        console.error('Error al conectar con el backend:', error);
+      },
+    });
+  }
+
+  postPersonaje() {
+    const postData = {
+      nombre: 'jose 5',
+      edad: 11,
+      estatura: 12.8,
+    };
+    this.inicioService.postPersonaje(postData).subscribe(
+      (data) => {
+        console.log('Respuesta del backend en el Post:', data);
+      },
+      (error) => {
+        console.error('Error al conectar con el backend:', error);
+      }
+    );
+    console.log(postData);
+  }
+
+  removepersonaje(personaje: any) {
+    console.log('Acaaa personaje pasado', personaje);
+  }
 
   ////
 }

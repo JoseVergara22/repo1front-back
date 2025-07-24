@@ -7,15 +7,28 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class InicioService {
-  private apiUrl = 'http://localhost:3000/payment';
+  private apiUrl = 'http://localhost:3000';
 
   constructor(private http: HttpClient) {}
 
   getPayments(): Observable<any> {
-    return this.http.get(this.apiUrl);
+    return this.http.get(this.apiUrl+'/payment');
   }
 
   postPayments(data:any): Observable<any> {
-    return this.http.post(this.apiUrl,data);
+    return this.http.post(this.apiUrl+'/payment',data);
   }
+
+
+  /////Acaa servicios para Post de personajes
+  getPersonajes(): Observable<any> {
+    return this.http.get(this.apiUrl+'/personajes');
+  }
+
+  postPersonaje(data:any): Observable<any> {
+    return this.http.post(this.apiUrl+'/personajes',data);
+  }
+
+
+  ////
 }
