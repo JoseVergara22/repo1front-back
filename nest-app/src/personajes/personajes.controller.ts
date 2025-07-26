@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  BadRequestException,
 } from '@nestjs/common';
 import { PersonajesService } from './personajes.service';
 import { CreatePersonajeDto } from './dto/create-personaje.dto';
@@ -28,10 +29,11 @@ export class PersonajesController {
   findAll() {
     return this.personajesService.findAll();
   }
+  @Get('with-skills')
+  findAllWithSkills() {
+    return this.personajesService.findAllWithSkills();
 
-  @Get(':id')
-  findOne(@Param('id') id: string): Promise<Personaje> {
-    return this.personajesService.findOne(+id);
+    //return "Holaaaa aca con skilss desde controlador"
   }
 
   @Patch(':id')
@@ -45,6 +47,25 @@ export class PersonajesController {
   @Delete(':id')
   remove(@Param('id') id: string): Promise<Personaje> {
     return this.personajesService.remove(+id);
+  }
+
+  @Get(':id')
+  findOne(@Param('id') id: string): Promise<Personaje> {
+    //return this.personajesService.findOne(+id);
+    const idNum = parseInt(id, 10);
+    if (isNaN(idNum)) {
+      throw new BadRequestException('El ID debe ser un número válido');
+    }
+    return this.personajesService.findOne(idNum);
+  }
+
+  @Get('with-skills/:id')
+  async findOneWithSkills(@Param('id') id: string): Promise<Personaje> {
+    const idNum = parseInt(id, 10);
+    if (isNaN(idNum)) {
+      throw new BadRequestException('El ID debe ser un número válido');
+    }
+    return this.personajesService.findOneWithSkills(idNum);
   }
 
   // @Get(':id')

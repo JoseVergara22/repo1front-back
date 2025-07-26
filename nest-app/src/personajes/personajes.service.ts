@@ -5,6 +5,7 @@ import { UpdatePersonajeDto } from './dto/update-personaje.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Personaje } from './entities/personaje.entity';
+import { Skill } from 'src/skills/entities/skill.entity';
 
 @Injectable()
 export class PersonajesService {
@@ -52,6 +53,24 @@ export class PersonajesService {
     const personaje = await this.findOne(id); // reutiliza findOne
     return this.personajeRepo.remove(personaje);
   }
+
+  async findAllWithSkills(): Promise<Personaje[]> {
+  const personajesConSkills = await this.personajeRepo.find({
+    relations: ['skills'],
+  });
+  return personajesConSkills;
+}
+
+async findOneWithSkills(id: number): Promise<Personaje> {
+  const personajesConSkill = await this.personajeRepo.findOne({
+    where: { id },
+    relations: ['skills'], // Este JOIN es lo que necesitas
+  });
+    if (!personajesConSkill) {
+    throw new Error(`Personaje con id ${id} no encontrado.`);
+  }
+  return personajesConSkill;
+}
 
   // findOne(id: number) {
   //   return `This action returns a #${id} personaje`;

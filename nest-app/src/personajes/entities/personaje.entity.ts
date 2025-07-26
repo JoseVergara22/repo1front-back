@@ -1,9 +1,9 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
-
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import { Skill } from 'src/skills/entities/skill.entity';
 
 @Entity('personajes')
 export class Personaje {
-@PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn()
   id: number;
 
   @Column()
@@ -14,4 +14,9 @@ export class Personaje {
 
   @Column('decimal', { precision: 5, scale: 2 })
   estatura: number;
+
+  @OneToMany(() => Skill, (skill) => skill.personaje)
+  skills: Skill[];
+
+  /////
 }

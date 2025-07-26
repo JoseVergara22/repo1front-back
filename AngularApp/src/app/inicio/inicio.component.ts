@@ -75,9 +75,9 @@ export class InicioComponent {
 
   postPersonaje() {
     const postData = {
-      nombre: 'jose 5',
-      edad: 11,
-      estatura: 12.8,
+      nombre: 'valentina Bouzas',
+      edad: 25,
+      estatura: 2.8,
     };
     this.inicioService.postPersonaje(postData).subscribe(
       (data) => {
